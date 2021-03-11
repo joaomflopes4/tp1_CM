@@ -1,9 +1,13 @@
 <resources>
     <string name="app_name">SmartCity</string>
     <string name="title">SmartCity</string>
+    <string name="title_Nota">Notas</string>
+    <string name="title_addNota">Adicionar Nota</string>
     <string name="login">Login</string>
     <string name="email">Email</string>
     <string name="pw">Password</string>
     <string name="entrar">Entrar</string>
     <string name="notas">Notas</string>
+    <string name="addnota">Adicionar Nota</string>
+
 </resources>
