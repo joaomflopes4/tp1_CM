@@ -9,5 +9,8 @@
     <string name="entrar">Entrar</string>
     <string name="notas">Notas</string>
     <string name="addnota">Adicionar Nota</string>
+    <string name="update">Editar</string>
+    <string name="cancel">Cancelar</string>
+    <string name="boxempty">Caixas de Texto vazias</string>
 
 </resources>

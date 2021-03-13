@@ -23,7 +23,7 @@ class AddNotasActivity : AppCompatActivity() {
         val button = findViewById<Button>(R.id.button_save)
         button.setOnClickListener {
             val replyIntent = Intent()
-            if (TextUtils.isEmpty(editWordView.text)) {
+            if (TextUtils.isEmpty(editWordView.text) || TextUtils.isEmpty(editDescView.text)) {
                 setResult(Activity.RESULT_CANCELED, replyIntent)
             } else {
                 replyIntent.putExtra(EXTRA_REPLY_TITULO, editWordView.text.toString())

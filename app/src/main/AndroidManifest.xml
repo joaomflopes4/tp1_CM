@@ -9,14 +9,15 @@
         android:roundIcon="@mipmap/ic_launcher_round"
         android:supportsRtl="true"
         android:theme="@style/Theme.Tp1_CM">
+        <activity android:name=".EditNotasActivity"></activity>
         <activity
             android:name=".AddNotasActivity"
-            android:parentActivityName=".NotasActivity"
-            android:label="@string/title_addNota"></activity>
+            android:label="@string/title_addNota"
+            android:parentActivityName=".NotasActivity" />
         <activity
             android:name=".NotasActivity"
-            android:parentActivityName=".MainActivity"
-            android:label="@string/title_Nota"/>
+            android:label="@string/title_Nota"
+            android:parentActivityName=".MainActivity" />
         <activity android:name=".RegistoActivity" />
         <activity android:name=".MainActivity">
             <intent-filter>

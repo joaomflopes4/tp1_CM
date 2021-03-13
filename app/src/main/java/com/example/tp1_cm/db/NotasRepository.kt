@@ -13,6 +13,16 @@ class NotasRepository(private val notasDao: NotasDao) {
     suspend fun insert(notas: Notas) {
         notasDao.insert(notas)
     }
+
+    //Editar notas
+    suspend fun editNote(notas: Notas){
+        notasDao.editNote(notas)
+    }
+
+    //Eliminar notas
+    suspend fun deleteNoteById(id:Int?){
+        notasDao.deleteNoteById(id)
+    }
 /*
     suspend fun deleteAll(){
         notasDao.deleteAll()
