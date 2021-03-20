@@ -21,19 +21,29 @@ class AddNotasActivity : AppCompatActivity() {
 
 
         val button = findViewById<Button>(R.id.button_save)
-        button.setOnClickListener {
-            val replyIntent = Intent()
-            if (TextUtils.isEmpty(editWordView.text) || TextUtils.isEmpty(editDescView.text)) {
-                setResult(Activity.RESULT_CANCELED, replyIntent)
-            } else {
-                replyIntent.putExtra(EXTRA_REPLY_TITULO, editWordView.text.toString())
-                replyIntent.putExtra(EXTRA_REPLY_DESCRICAO, editDescView.text.toString())
-                setResult(Activity.RESULT_OK, replyIntent)
-                /*val word = editWordView.text.toString()
-                replyIntent.putExtra(EXTRA_REPLY, word)
-                setResult(Activity.RESULT_OK, replyIntent)*/
+
+        if (intent.getStringExtra(EXTRA_REPLY_TITULO).isNullOrEmpty() && intent.getStringExtra(EXTRA_REPLY_DESCRICAO).isNullOrEmpty()) {
+            button.setOnClickListener {
+                val replyIntent = Intent()
+                if (TextUtils.isEmpty(editWordView.text) || TextUtils.isEmpty(editDescView.text)) {
+                    if(TextUtils.isEmpty((editWordView.text)) && !TextUtils.isEmpty((editDescView.text))){
+                        editWordView.error = getString(R.string.toast_title)
+                    }
+                    if(!TextUtils.isEmpty((editWordView.text)) && TextUtils.isEmpty((editDescView.text))){
+                        editDescView.error = getString(R.string.toast_desc)
+                    }
+                    if(TextUtils.isEmpty((editWordView.text)) && TextUtils.isEmpty((editDescView.text))){
+                        editWordView.error = getString(R.string.toast_title)
+                        editDescView.error = getString(R.string.toast_desc)
+                    }
+                } else {
+
+                    replyIntent.putExtra(EXTRA_REPLY_TITULO, editWordView.text.toString())
+                    replyIntent.putExtra(EXTRA_REPLY_DESCRICAO, editDescView.text.toString())
+                    setResult(Activity.RESULT_OK, replyIntent)
+                    finish()
+                }
             }
-            finish()
         }
     }
 

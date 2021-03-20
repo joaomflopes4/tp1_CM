@@ -58,11 +58,11 @@ class NotasActivity : AppCompatActivity() {
             }
 
         } else {
-            Toast.makeText(
-                applicationContext,
-                R.string.boxempty,
-                Toast.LENGTH_LONG
-            ).show()
+          //  Toast.makeText(
+           //     applicationContext,
+            //    R.string.boxempty,
+               // Toast.LENGTH_LONG
+           // ).show()
         }
     }
 

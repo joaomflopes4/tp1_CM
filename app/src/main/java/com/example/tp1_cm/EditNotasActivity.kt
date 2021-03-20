@@ -39,21 +39,32 @@ class EditNotasActivity : AppCompatActivity() {
 
         var message = intent.getIntExtra(ID, 0)
         val replyIntent = Intent()
-        if (TextUtils.isEmpty(titulo.text) || TextUtils.isEmpty(descricao.text))  {
-            setResult(Activity.RESULT_CANCELED, replyIntent)
 
+        if (TextUtils.isEmpty((titulo.text)) || TextUtils.isEmpty((descricao.text))) {
+
+            if (TextUtils.isEmpty((titulo.text)) && !TextUtils.isEmpty((descricao.text))) {
+                titulo.error = getString(R.string.toast_title)
+            }
+            if (!TextUtils.isEmpty((titulo.text)) && TextUtils.isEmpty((descricao.text))) {
+                descricao.error = getString(R.string.toast_desc)
+            }
+            if (TextUtils.isEmpty((titulo.text)) && TextUtils.isEmpty((descricao.text))) {
+                titulo.error = getString(R.string.toast_title)
+                descricao.error = getString(R.string.toast_desc)
+            }
         } else {
-            val nota = Notas(id = message, titulo = titulo.text.toString(), descricao = descricao.text.toString())
+            val nota = Notas(
+                    id = message,
+                    titulo = titulo.text.toString(),
+                    descricao = descricao.text.toString()
+            )
             notasViewModel.editNote(nota)
-
-
+            finish()
         }
-        finish()
     }
 
-
-    fun cancelUpdate(view: View) {
-        var intent = Intent(this, NotasActivity::class.java)
-        startActivity(intent)
+        fun cancelUpdate(view: View) {
+            var intent = Intent(this, NotasActivity::class.java)
+            startActivity(intent)
+        }
     }
-}

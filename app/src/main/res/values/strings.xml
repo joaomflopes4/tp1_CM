@@ -1,16 +1,21 @@
 <resources>
     <string name="app_name">SmartCity</string>
     <string name="title">SmartCity</string>
-    <string name="title_Nota">Notas</string>
-    <string name="title_addNota">Adicionar Nota</string>
+    <string name="title_Nota">Notes</string>
+    <string name="title_addNota">Add Notes</string>
     <string name="login">Login</string>
     <string name="email">Email</string>
     <string name="pw">Password</string>
-    <string name="entrar">Entrar</string>
-    <string name="notas">Notas</string>
-    <string name="addnota">Adicionar Nota</string>
-    <string name="update">Editar</string>
-    <string name="cancel">Cancelar</string>
-    <string name="boxempty">Caixas de Texto vazias</string>
+    <string name="entrar">Login</string>
+    <string name="notas">Notes</string>
+    <string name="addnota">Add Note</string>
+    <string name="editnota">Edit Note</string>
+    <string name="update">Edit</string>
+    <string name="cancel">Cancel</string>
+    <string name="boxempty">"Empty Text Boxes "</string>
+    <string name="description">Description</string>
+    <string name="title_note">Title</string>
+    <string name="toast_title">Insert Title</string>
+    <string name="toast_desc">Insert Description</string>
 
 </resources>

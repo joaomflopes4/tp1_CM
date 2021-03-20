@@ -48,11 +48,12 @@ class NotasAdapter internal constructor(
         holder.descricao.text = current.descricao
         val id: Int? = current.id
 
+        //edit
         holder.delete.setOnClickListener {
             callbackInterface.delete(current.id)
         }
 
-
+        //edit
         holder.edit.setOnClickListener {
             val context = holder.notaItemView.context
             val titl = holder.notaItemView.text.toString()

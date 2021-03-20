@@ -30,15 +30,4 @@ interface NotasDao {
     @Query("DELETE FROM notas_table where id ==:id")
     suspend fun deleteNoteById(id: Int?)
 
-/*
-    @Query(value = "SELECT * from notas_table WHERE notas == :notas")
-    suspend fun deleteByNotas(notas: String)
-
-    //update Notas
-    @Update
-    suspend fun updateNotas(notas: Notas)
-
-    @Query(value = "UPDATE notas_table SET descricao=:descricao WHERE titulo == :titulo")
-    suspend fun updateDescricaoFromId(titulo: String, descricao: String)
-*/
 }
