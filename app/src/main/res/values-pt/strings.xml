@@ -18,4 +18,7 @@
     <string name="title_note">Título</string>
     <string name="toast_title">Insira um título</string>
     <string name="toast_desc">Insira uma descrição</string>
+    <string name="Login_Email">Insira um email</string>
+    <string name="Login_Password">Insira a palavra-passe</string>
+    <string name="Error_login">Dados inválidos</string>
 </resources>
