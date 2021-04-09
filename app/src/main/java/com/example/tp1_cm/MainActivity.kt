@@ -30,7 +30,7 @@ class MainActivity : AppCompatActivity() {
 
         val request = ServiceBuilder.buildService(EndPoints::class.java)
         val call = request.postTest(emailInserido.text.toString(),passwordInserida.text.toString())
-        var intent = Intent(this, MapActivity::class.java)
+        var intent = Intent(this, MapsActivity::class.java)
 
         //Validações
         if(emailInserido.text.isNullOrEmpty() || passwordInserida.text.isNullOrEmpty()){
