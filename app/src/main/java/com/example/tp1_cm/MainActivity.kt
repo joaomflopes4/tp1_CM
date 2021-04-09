@@ -54,7 +54,7 @@ class MainActivity : AppCompatActivity() {
 
                     //Confirmação login
                     if(emailInserido.text.toString().equals(e.email) && (passwordInserida.text.toString().equals(e.password))){
-                        Toast.makeText(this@MainActivity, e.email.toString() + "-" + e.password, Toast.LENGTH_SHORT).show()
+                       /* Toast.makeText(this@MainActivity, e.email.toString() + "-" + e.password, Toast.LENGTH_SHORT).show()*/
                         startActivity(intent)
                     }else if (!(emailInserido.text.toString().equals(e.email) && (passwordInserida.text.toString().equals(e.password)))){
 
