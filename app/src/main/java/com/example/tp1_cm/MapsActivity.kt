@@ -118,6 +118,7 @@ class MapsActivity : AppCompatActivity(), OnMapReadyCallback {
             startActivity(intent)
         }
 
+
         builder.setNegativeButton(R.string.no) { dialog: DialogInterface?, which: Int ->}
         builder.show()
 
