@@ -21,4 +21,10 @@
     <string name="Login_Email">Insira um email</string>
     <string name="Login_Password">Insira a palavra-passe</string>
     <string name="Error_login">Dados inválidos</string>
+    <string name="addNote">asd</string>
+    <string name="logout">Terminar Sessão</string>
+    <string name="logoutMessage">Deseja terminar a sessão?</string>
+    <string name="yes">Sim</string>
+    <string name="no">Não</string>
+    <string name="title_activity_maps">Mapa</string>
 </resources>

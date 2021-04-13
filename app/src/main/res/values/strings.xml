@@ -21,5 +21,26 @@
     <string name="Login_Password">Insert a password</string>
     <string name="Error_login">Invalid data</string>
     <string name="title_activity_maps">Map</string>
+    <string name="title_activity_navigation_drawer" translatable="false">NavigationDrawer</string>
+    <string name="navigation_drawer_open" translatable="false">Open navigation drawer</string>
+    <string name="navigation_drawer_close" translatable="false">Close navigation drawer</string>
+    <string name="nav_header_title" translatable="false">Android Studio</string>
+    <string name="nav_header_subtitle" translatable="false">android.studio@android.com</string>
+    <string name="nav_header_desc" translatable="false">Navigation header</string>
+    <string name="action_settings" translatable="false">Settings</string>
+
+    <string name="menu_home" translatable="false">Home</string>
+    <string name="menu_gallery" translatable="false">Gallery</string>
+    <string name="menu_slideshow" translatable="false">Slideshow</string>
+    <string name="addNote">asd</string>
+    <string name="EmailShared" translatable="false">emailshared</string>
+    <string name="Id_LoginUser" translatable="false">idloginuser</string>
+    <string name="LoginShared" translatable="false">loginshared</string>
+    <string name="idUser" translatable="false">iduser</string>
+    <string name="preference_login" translatable="false">LoginSharePreferences</string>
+    <string name="logout">Logout</string>
+    <string name="logoutMessage">Are you sure you want to logout?</string>
+    <string name="yes">Yes</string>
+    <string name="no">No</string>
 
 </resources>

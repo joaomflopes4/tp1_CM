@@ -1,18 +1,33 @@
 package com.example.tp1_cm
 
+import android.content.Context
+import android.content.DialogInterface
+import android.content.Intent
+import android.content.SharedPreferences
 import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
+import android.view.View
+import android.widget.Toast
+import androidx.appcompat.app.AlertDialog
+import com.example.tp1_cm.api.EndPoints
+import com.example.tp1_cm.api.Pontos
+import com.example.tp1_cm.api.ServiceBuilder
+import retrofit2.Call
+import retrofit2.Callback
+import retrofit2.Response
 
 import com.google.android.gms.maps.CameraUpdateFactory
 import com.google.android.gms.maps.GoogleMap
 import com.google.android.gms.maps.OnMapReadyCallback
 import com.google.android.gms.maps.SupportMapFragment
+import com.google.android.gms.maps.model.BitmapDescriptorFactory
 import com.google.android.gms.maps.model.LatLng
 import com.google.android.gms.maps.model.MarkerOptions
 
 class MapsActivity : AppCompatActivity(), OnMapReadyCallback {
 
     private lateinit var mMap: GoogleMap
+    private lateinit var pontos: List<Pontos>
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -21,6 +36,46 @@ class MapsActivity : AppCompatActivity(), OnMapReadyCallback {
         val mapFragment = supportFragmentManager
                 .findFragmentById(R.id.map) as SupportMapFragment
         mapFragment.getMapAsync(this)
+
+        val request = ServiceBuilder.buildService(EndPoints::class.java)
+        val call = request.getPontos()
+        var position: LatLng
+        val sharedPref: SharedPreferences = getSharedPreferences(
+                getString(R.string.preference_login), Context.MODE_PRIVATE
+        )
+
+        call.enqueue(object : Callback<List<Pontos>>{
+            override fun onResponse(call: Call<List<Pontos>>, response: Response<List<Pontos>>) {
+                if (response.isSuccessful){
+                    pontos = response.body()!!
+                    for(ponto in pontos){
+                        position = LatLng(ponto.latitude.toString().toDouble(), ponto.longitude.toString().toDouble())
+                        if (ponto.id_user.equals(sharedPref.all[getString(R.string.Id_LoginUser)])){
+
+                            mMap.addMarker(MarkerOptions()
+                                    .position(position)
+                                    .title(ponto.nome)
+                                    .snippet(ponto.descricao)
+                                    .icon(BitmapDescriptorFactory.defaultMarker(BitmapDescriptorFactory.HUE_AZURE))
+
+                            )
+                        }else {
+                            mMap.addMarker(
+                                    MarkerOptions()
+                                            .position(position)
+                                            .title(ponto.nome)
+                                            .snippet(ponto.descricao)
+                            )
+                        }
+                    }
+                }
+            }
+            override fun onFailure(call: Call<List<Pontos>>, t: Throwable) {
+                Toast.makeText(this@MapsActivity, "${t.message}", Toast.LENGTH_SHORT).show()
+            }
+        })
+
+
     }
 
     /**
@@ -38,8 +93,34 @@ class MapsActivity : AppCompatActivity(), OnMapReadyCallback {
         // Add a marker in Sydney and move the camera
         val zone = LatLng(41.6946, -8.83016)
         val zoomLevel = 15f
-        mMap.addMarker(MarkerOptions().position(zone).title("Marker in Sydney"))
+
         /* mMap.moveCamera(CameraUpdateFactory.newLatLng(zone))*/
         mMap.moveCamera(CameraUpdateFactory.newLatLngZoom(zone, zoomLevel))
+    }
+
+    fun logout(view: View) {
+
+        val builder = AlertDialog.Builder(this)
+        builder.setTitle(R.string.logout)
+        builder.setMessage(R.string.logoutMessage)
+        builder.setIcon(R.drawable.ic_baseline_exit_to_app_24)
+        builder.setPositiveButton(R.string.yes) { dialog: DialogInterface?, which: Int ->
+            //Fab
+            val sharedPref: SharedPreferences = getSharedPreferences(
+                    getString(R.string.preference_login), Context.MODE_PRIVATE
+            )
+            with(sharedPref.edit()){
+                putBoolean(getString(R.string.LoginShared), false)
+                putString(getString(R.string.EmailShared), "")
+                commit()
+            }
+            var intent = Intent(this, MainActivity::class.java)
+            startActivity(intent)
+        }
+
+        builder.setNegativeButton(R.string.no) { dialog: DialogInterface?, which: Int ->}
+        builder.show()
+
+
     }
 }
