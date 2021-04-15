@@ -44,19 +44,22 @@ class MapsActivity : AppCompatActivity(), OnMapReadyCallback {
                 getString(R.string.preference_login), Context.MODE_PRIVATE
         )
 
+        //Obter resposta do ws
         call.enqueue(object : Callback<List<Pontos>>{
             override fun onResponse(call: Call<List<Pontos>>, response: Response<List<Pontos>>) {
                 if (response.isSuccessful){
                     pontos = response.body()!!
                     for(ponto in pontos){
                         position = LatLng(ponto.latitude.toString().toDouble(), ponto.longitude.toString().toDouble())
+
+                        //se o id_Utilizador do ponto for igual ao id do login(SharedPreferences
                         if (ponto.id_user.equals(sharedPref.all[getString(R.string.Id_LoginUser)])){
 
                             mMap.addMarker(MarkerOptions()
                                     .position(position)
                                     .title(ponto.nome)
                                     .snippet(ponto.descricao)
-                                    .icon(BitmapDescriptorFactory.defaultMarker(BitmapDescriptorFactory.HUE_AZURE))
+                                    .icon(BitmapDescriptorFactory.defaultMarker(BitmapDescriptorFactory.HUE_AZURE)) //altera a cor
 
                             )
                         }else {

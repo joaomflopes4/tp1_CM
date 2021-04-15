@@ -21,6 +21,7 @@ class MainActivity : AppCompatActivity() {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_main)
 
+        //verifica se o login já foi realizado - SharedPreferences
         val sharedPref: SharedPreferences = getSharedPreferences(
                 getString(R.string.preference_login), Context.MODE_PRIVATE
         )
@@ -38,6 +39,7 @@ class MainActivity : AppCompatActivity() {
         startActivity(intent)
     }
 
+    //função para login
     fun map(view: View) {
         val emailInserido = findViewById<EditText>(R.id.editTextTextEmailAddress)
         val passwordInserida = findViewById<EditText>(R.id.editTextTextPassword)
@@ -46,7 +48,7 @@ class MainActivity : AppCompatActivity() {
         val call = request.postTest(emailInserido.text.toString(),passwordInserida.text.toString())
         var intent = Intent(this, MapsActivity::class.java)
 
-        //Validações
+        //Validações do formulário
         if(emailInserido.text.isNullOrEmpty() || passwordInserida.text.isNullOrEmpty()){
 
             if(emailInserido.text.isNullOrEmpty() && !passwordInserida.text.isNullOrEmpty()){
@@ -61,6 +63,7 @@ class MainActivity : AppCompatActivity() {
             }
         }
 
+        //Obter resposta do ws
         call.enqueue(object : Callback<OutputPost>{
             override fun onResponse(call: Call<OutputPost>, response: Response<OutputPost>) {
                 if (response.isSuccessful){

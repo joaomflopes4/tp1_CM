@@ -1,6 +1,7 @@
 package com.example.tp1_cm.api
 
 data class Pontos (
+        //recebe resposta do ws - pontos
         val id: Int,
         val  latitude: String,
         val longitude: String,
