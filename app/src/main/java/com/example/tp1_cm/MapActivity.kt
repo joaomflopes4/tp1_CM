@@ -34,6 +34,7 @@ class MapActivity : AppCompatActivity() {
                     }
                 }
             }
+
             override fun onFailure(call: Call<List<User>>, t: Throwable) {
                 Toast.makeText(this@MapActivity, "${t.message}", Toast.LENGTH_SHORT).show()
             }
