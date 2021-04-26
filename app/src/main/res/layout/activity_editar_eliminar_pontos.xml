@@ -30,7 +30,7 @@
             android:layout_marginTop="17dp"
             android:layout_marginEnd="196dp"
             android:layout_marginRight="196dp"
-            android:text="Descricao"
+            android:text="@string/description"
             android:textSize="18sp"
             android:textStyle="bold" />
 
@@ -48,7 +48,7 @@
             android:layout_marginTop="25dp"
             android:layout_marginEnd="247dp"
             android:layout_marginRight="247dp"
-            android:text="Titulo"
+            android:text="@string/tit"
             android:textSize="18sp"
             android:textStyle="bold" />
 
@@ -102,7 +102,7 @@
             android:layout_marginTop="105dp"
             android:layout_marginEnd="256dp"
             android:layout_marginRight="256dp"
-            android:text="Imagem"
+            android:text="@string/image"
             android:textSize="18sp"
             android:textStyle="bold" />
 
@@ -149,7 +149,7 @@
                 android:layout_weight="20"
                 android:background="@drawable/rounded_button"
                 android:backgroundTint="#1D88CB"
-                android:text="Apagar"
+                android:text="@string/delete"
                 android:textColor="#FAFFFFFF"
                 android:textStyle="bold"></Button>
 
@@ -170,7 +170,7 @@
                 android:background="@drawable/rounded_button"
                 android:backgroundTint="#1D88CB"
                 android:onClick="addNotas"
-                android:text="Editar"
+                android:text="@string/edit"
                 android:textColor="#FFFFFF"
                 android:textStyle="bold"></Button>
 
@@ -188,10 +188,10 @@
             android:layout_marginStart="25dp"
             android:layout_marginLeft="25dp"
             android:layout_marginTop="42dp"
-            android:layout_marginEnd="221dp"
-            android:layout_marginRight="221dp"
+            android:layout_marginEnd="212dp"
+            android:layout_marginRight="212dp"
             android:layout_marginBottom="207dp"
-            android:text="Tipo ocorrencia"
+            android:text="@string/occurrence"
             android:textSize="18sp"
             android:textStyle="bold" />
 

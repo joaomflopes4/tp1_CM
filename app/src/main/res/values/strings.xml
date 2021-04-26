@@ -45,5 +45,8 @@
     <string name="back">Need to logout</string>
     <string name="delete">Delete</string>
     <string name="edit">Edit</string>
+    <string name="tit">Title</string>
+    <string name="occurrence">Occurrence Type</string>
+    <string name="image">Image</string>
 
 </resources>

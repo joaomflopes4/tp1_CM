@@ -30,4 +30,7 @@
     <string name="back">É necessário terminar sessão</string>
     <string name="delete">Apagar</string>
     <string name="edit">Editar</string>
+    <string name="tit">Título</string>
+    <string name="occurrence">Tipo de ocurrência</string>
+    <string name="image">Imagem</string>
 </resources>
