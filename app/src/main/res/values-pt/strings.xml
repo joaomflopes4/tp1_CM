@@ -27,4 +27,7 @@
     <string name="yes">Sim</string>
     <string name="no">Não</string>
     <string name="title_activity_maps">Mapa</string>
+    <string name="back">É necessário terminar sessão</string>
+    <string name="delete">Apagar</string>
+    <string name="edit">Editar</string>
 </resources>

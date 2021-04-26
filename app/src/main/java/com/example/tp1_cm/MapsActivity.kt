@@ -58,7 +58,7 @@ class MapsActivity : AppCompatActivity(), OnMapReadyCallback {
                             mMap.addMarker(MarkerOptions()
                                     .position(position)
                                     .title(ponto.nome)
-                                    .snippet(ponto.descricao)
+                                    .snippet(ponto.descricao + "+" + ponto.foto + "+" + ponto.id_user + "+" + sharedPref.all[getString(R.string.Id_LoginUser)].toString() + "+" + ponto.id_ocorrencia)
                                     .icon(BitmapDescriptorFactory.defaultMarker(BitmapDescriptorFactory.HUE_AZURE)) //altera a cor
 
                             )
@@ -67,7 +67,7 @@ class MapsActivity : AppCompatActivity(), OnMapReadyCallback {
                                     MarkerOptions()
                                             .position(position)
                                             .title(ponto.nome)
-                                            .snippet(ponto.descricao)
+                                            .snippet(ponto.descricao + "+" + ponto.foto + "+" + ponto.id_user + "+" + sharedPref.all[getString(R.string.Id_LoginUser)].toString() + "+" + ponto.id_ocorrencia)
                             )
                         }
                     }
@@ -100,8 +100,18 @@ class MapsActivity : AppCompatActivity(), OnMapReadyCallback {
 
         /* mMap.moveCamera(CameraUpdateFactory.newLatLng(zone))*/
         mMap.moveCamera(CameraUpdateFactory.newLatLngZoom(zone, zoomLevel))
+        mMap.setInfoWindowAdapter(Markerwindow(this))
+        //Passar a informação quando a InfoWindow é clicada
+                mMap.setOnInfoWindowClickListener { marker ->
+                    val intent = Intent(this, Editar_eliminarPontos::class.java).apply{
+                        putExtra("Título", marker.title)
+                        putExtra("Spinnet", marker.snippet)
+                    }
+                    startActivity(intent)
+                }
     }
 
+    //logout
     fun logout(view: View) {
 
         val builder = AlertDialog.Builder(this)
@@ -127,5 +137,10 @@ class MapsActivity : AppCompatActivity(), OnMapReadyCallback {
         builder.show()
 
 
+    }
+
+    override fun onBackPressed() {
+        //nothing
+        Toast.makeText(this@MapsActivity, R.string.back, Toast.LENGTH_SHORT).show()
     }
 }
