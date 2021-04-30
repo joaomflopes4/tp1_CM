@@ -2,13 +2,20 @@ package com.example.tp1_cm
 
 import android.app.Activity
 import android.content.Context
+import android.content.Intent
 import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
 import android.view.View
 import android.widget.*
+import com.example.tp1_cm.api.EditarOcorrencias
+import com.example.tp1_cm.api.EndPoints
+import com.example.tp1_cm.api.ServiceBuilder
 import com.google.android.gms.maps.GoogleMap
 import com.google.android.gms.maps.model.Marker
 import com.squareup.picasso.Picasso
+import retrofit2.Call
+import retrofit2.Callback
+import retrofit2.Response
 
 class Editar_eliminarPontos : AppCompatActivity() {
 
@@ -55,6 +62,64 @@ class Editar_eliminarPontos : AppCompatActivity() {
             ocorrencia.text = "Acidente"
         } else {
             ocorrencia.text = "Obras"
+        }
+    }
+
+    fun editarOcorrencias(view: View) {
+        var intent = intent
+        val titulo = intent.getStringExtra("Título")
+        val recebido = intent.getStringExtra("Spinnet")
+
+        //Dividir o spinnet recebido que contem descrição, imagem e id's
+        val strs = recebido!!.split("+").toTypedArray()
+
+        //Atribuir id
+        val id = strs[5].toInt()
+
+        val tituloEditado = findViewById<EditText>(R.id.tituloMarker)
+        val descricaoEditada = findViewById<EditText>(R.id.descricaoMarker)
+
+        val request = ServiceBuilder.buildService(EndPoints::class.java)
+        val call = request.editarOcorrencia(id,tituloEditado.text.toString(),descricaoEditada.text.toString())
+        var intent2 = Intent(this, MapsActivity::class.java)
+
+
+        if (tituloEditado.text.isNullOrEmpty() || descricaoEditada.text.isNullOrEmpty()) {
+
+            if (tituloEditado.text.isNullOrEmpty() && !descricaoEditada.text.isNullOrEmpty()) {
+                tituloEditado.error = getString(R.string.toast_title)
+            }
+            if (!tituloEditado.text.isNullOrEmpty() && descricaoEditada.text.isNullOrEmpty()) {
+                descricaoEditada.error = getString(R.string.toast_desc)
+            }
+            if (tituloEditado.text.isNullOrEmpty() && descricaoEditada.text.isNullOrEmpty()) {
+                tituloEditado.error = getString(R.string.toast_title)
+                descricaoEditada.error = getString(R.string.toast_desc)
+            }
+        } else {
+            call.enqueue(object : Callback<EditarOcorrencias> {
+                override fun onResponse(call: Call<EditarOcorrencias>, response: Response<EditarOcorrencias>) {
+                    if (response.isSuccessful){
+                        val e: EditarOcorrencias = response.body()!!
+
+                        if(tituloEditado.text.toString().equals(e.nome) && (descricaoEditada.text.toString().equals(e.descricao))){
+
+                            Toast.makeText(this@Editar_eliminarPontos, R.string.updatesuccessful, Toast.LENGTH_SHORT).show()
+                            startActivity(intent2)
+
+
+                        }else if (!(tituloEditado.text.toString().equals(e.nome) && (descricaoEditada.text.toString().equals(e.descricao)))){
+
+                            Toast.makeText(this@Editar_eliminarPontos, R.string.ErrorupdatePoint, Toast.LENGTH_SHORT).show()
+                        }
+
+                    }
+                }
+
+                override fun onFailure(call: Call<EditarOcorrencias>, t: Throwable) {
+                    //Toast.makeText(this@Editar_eliminarPontos, "${t.message}", Toast.LENGTH_SHORT).show()
+                }
+            })
         }
     }
 

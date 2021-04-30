@@ -20,4 +20,9 @@ interface EndPoints { //Faz os pedidos ao ws
     //Get -> Pontos
     @GET("/myslim/api/pontos")
     fun getPontos(): Call<List<Pontos>>
+
+    //Editar pontos
+    @FormUrlEncoded
+    @POST("/myslim/api/editar/pontos")
+    fun editarOcorrencia(@Field("id") first: Int, @Field ("nome") second: String, @Field ("descricao") third: String): Call<EditarOcorrencias>
 }

@@ -48,5 +48,7 @@
     <string name="tit">Title</string>
     <string name="occurrence">Occurrence Type</string>
     <string name="image">Image</string>
+    <string name="updatesuccessful">Update Successful</string>
+    <string name="ErrorupdatePoint">Error to Update</string>
 
 </resources>
