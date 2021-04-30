@@ -4,14 +4,19 @@ import android.content.Context
 import android.content.DialogInterface
 import android.content.Intent
 import android.content.SharedPreferences
+import android.content.pm.PackageManager
+import android.location.Location
 import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
+import android.util.Log
 import android.view.View
 import android.widget.Toast
 import androidx.appcompat.app.AlertDialog
+import androidx.core.app.ActivityCompat
 import com.example.tp1_cm.api.EndPoints
 import com.example.tp1_cm.api.Pontos
 import com.example.tp1_cm.api.ServiceBuilder
+import com.google.android.gms.location.*
 import retrofit2.Call
 import retrofit2.Callback
 import retrofit2.Response
@@ -29,6 +34,12 @@ class MapsActivity : AppCompatActivity(), OnMapReadyCallback {
     private lateinit var mMap: GoogleMap
     private lateinit var pontos: List<Pontos>
 
+    private lateinit var lastLocation: Location
+    private lateinit var fusedLocationClient: FusedLocationProviderClient
+
+    private lateinit var  locationCallback: LocationCallback
+    private lateinit var locationRequest: LocationRequest
+
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_maps)
@@ -36,6 +47,20 @@ class MapsActivity : AppCompatActivity(), OnMapReadyCallback {
         val mapFragment = supportFragmentManager
                 .findFragmentById(R.id.map) as SupportMapFragment
         mapFragment.getMapAsync(this)
+
+
+        //inicializar fusedLocationClient
+        fusedLocationClient = LocationServices.getFusedLocationProviderClient(this)
+
+        locationCallback = object : LocationCallback(){
+            override fun onLocationResult(p0: LocationResult) {
+                super.onLocationResult(p0)
+                lastLocation = p0.lastLocation
+                var loc = LatLng(lastLocation.latitude, lastLocation.longitude)
+                //mMap.moveCamera(CameraUpdateFactory.newLatLngZoom(loc, 15.0f))
+                Log.d("***AQUI", "nova localização - " + loc.latitude + "-" + loc.longitude)
+            }
+        }
 
         val request = ServiceBuilder.buildService(EndPoints::class.java)
         val call = request.getPontos()
@@ -78,6 +103,7 @@ class MapsActivity : AppCompatActivity(), OnMapReadyCallback {
                 Toast.makeText(this@MapsActivity, "${t.message}", Toast.LENGTH_SHORT).show()
             }
         })
+        createLocationRequest()
 
 
     }
@@ -93,7 +119,7 @@ class MapsActivity : AppCompatActivity(), OnMapReadyCallback {
      */
     override fun onMapReady(googleMap: GoogleMap) {
         mMap = googleMap
-
+        setUpMap()
         // Add a marker in Sydney and move the camera
         val zone = LatLng(41.6946, -8.83016)
         val zoomLevel = 15f
@@ -109,6 +135,55 @@ class MapsActivity : AppCompatActivity(), OnMapReadyCallback {
                     }
                     startActivity(intent)
                 }
+    }
+
+
+    private fun setUpMap() {
+        if(ActivityCompat.checkSelfPermission(this,
+                android.Manifest.permission.ACCESS_FINE_LOCATION) != PackageManager.PERMISSION_GRANTED){
+            ActivityCompat.requestPermissions(this,
+                arrayOf(android.Manifest.permission.ACCESS_FINE_LOCATION), 1)
+            return
+        }else{
+            mMap.isMyLocationEnabled = true
+
+            fusedLocationClient.lastLocation.addOnSuccessListener(this) { location ->
+                if(location != null){
+                    lastLocation = location
+                    //Toast.makeText(this@MapsActivity, lastLocation.toString(), Toast.LENGTH_SHORT).show()
+                    val currentLatLng = LatLng(location.latitude, location.longitude)
+                    //mMap.animateCamera(CameraUpdateFactory.newLatLngZoom(currentLatLng, 15f))
+                }
+            }
+        }
+    }
+
+    private fun startLocationUpdates() {
+        if(ActivityCompat.checkSelfPermission(this,
+                android.Manifest.permission.ACCESS_FINE_LOCATION) != PackageManager.PERMISSION_GRANTED){
+            ActivityCompat.requestPermissions(this,
+                arrayOf(android.Manifest.permission.ACCESS_FINE_LOCATION),1)
+            return
+        }
+        fusedLocationClient.requestLocationUpdates(locationRequest, locationCallback, null )
+    }
+
+    private fun createLocationRequest(){
+        locationRequest = LocationRequest()
+        locationRequest.interval = 10000
+        locationRequest.priority = LocationRequest.PRIORITY_HIGH_ACCURACY
+    }
+
+    override fun onPause(){
+        super.onPause()
+        fusedLocationClient.removeLocationUpdates(locationCallback)
+        Log.d("***AQUI", "onPause - removeLocationUpdates")
+    }
+
+    public override fun onResume(){
+        super.onResume()
+        startLocationUpdates()
+        Log.d("***AQUI", "onResume - startLocationUpdates")
     }
 
     //logout
@@ -139,6 +214,7 @@ class MapsActivity : AppCompatActivity(), OnMapReadyCallback {
 
     }
 
+    //navegação
     override fun onBackPressed() {
         //nothing
         Toast.makeText(this@MapsActivity, R.string.back, Toast.LENGTH_SHORT).show()
