@@ -2,12 +2,15 @@ package com.example.tp1_cm
 
 import android.app.Activity
 import android.content.Context
+import android.content.DialogInterface
 import android.content.Intent
 import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
 import android.view.View
 import android.widget.*
+import androidx.appcompat.app.AlertDialog
 import com.example.tp1_cm.api.EditarOcorrencias
+import com.example.tp1_cm.api.EliminarOcorrencias
 import com.example.tp1_cm.api.EndPoints
 import com.example.tp1_cm.api.ServiceBuilder
 import com.google.android.gms.maps.GoogleMap
@@ -121,6 +124,53 @@ class Editar_eliminarPontos : AppCompatActivity() {
                 }
             })
         }
+    }
+
+    fun eliminarOcorrencia(view: View){
+        var intent = intent
+        val titulo = intent.getStringExtra("Título")
+        val spinnet = intent.getStringExtra("Spinnet")
+
+        //Dividir o spinnet recebido que contem descrição, imagem e id's
+        val strs = spinnet!!.split("+").toTypedArray()
+
+        //Atribuir id
+        val idRecebido = strs[5].toInt()
+
+        val request = ServiceBuilder.buildService(EndPoints::class.java)
+        val call = request.eliminarOcorrencia(idRecebido)
+        var intent2 = Intent(this, MapsActivity::class.java)
+
+        val builder = AlertDialog.Builder(this)
+        builder.setTitle(R.string.deletepointtitle)
+        builder.setMessage(R.string.DeletePoint)
+        builder.setIcon(R.drawable.ic_baseline_delete_24_red)
+        builder.setNegativeButton(R.string.no) { dialog: DialogInterface?, which: Int ->
+        }
+        builder.setPositiveButton(R.string.yes) { dialog: DialogInterface?, which: Int ->
+            call.enqueue(object : Callback<EliminarOcorrencias> {
+                override fun onResponse(call: Call<EliminarOcorrencias>, response: Response<EliminarOcorrencias>) {
+                    if (response.isSuccessful){
+                        val e: EliminarOcorrencias = response.body()!!
+                        if(idRecebido == e.id){
+                            Toast.makeText(this@Editar_eliminarPontos, R.string.deletesucessful, Toast.LENGTH_SHORT).show()
+                            startActivity(intent2)
+                        }
+                    } else {
+                        Toast.makeText(this@Editar_eliminarPontos, R.string.Errordelete, Toast.LENGTH_SHORT).show()
+                    }
+                }
+
+                override fun onFailure(call: Call<EliminarOcorrencias>, t: Throwable) {
+                    Toast.makeText(this@Editar_eliminarPontos, "${t.message}", Toast.LENGTH_SHORT).show()
+                }
+            })
+        }
+
+
+        builder.show()
+
+
     }
 
 }

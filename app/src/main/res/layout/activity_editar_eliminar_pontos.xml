@@ -150,6 +150,7 @@
                 android:background="@drawable/rounded_button"
                 android:backgroundTint="#1D88CB"
                 android:text="@string/delete"
+                android:onClick="eliminarOcorrencia"
                 android:textColor="#FAFFFFFF"
                 android:textStyle="bold"></Button>
 
