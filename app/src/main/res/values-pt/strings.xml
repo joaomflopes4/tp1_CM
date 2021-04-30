@@ -40,4 +40,6 @@
     <string name="deletesucessful">Eliminado com sucesso</string>
     <string name="Errordelete">Erro ao eliminar</string>
     <string name="save">Guardar</string>
+    <string name="accidents">Acidente</string>
+    <string name="construction">Obras</string>
 </resources>

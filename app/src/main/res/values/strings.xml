@@ -55,5 +55,12 @@
     <string name="deletesucessful">Delete Sucessful</string>
     <string name="Errordelete">Error to delete</string>
     <string name="save">Save</string>
+    <string-array name="tipos">
+        <item></item>
+        <item>@string/accidents</item>
+        <item>@string/construction</item>
+    </string-array>
+    <string name="accidents">Accidents</string>
+    <string name="construction">Construction</string>
 
 </resources>
