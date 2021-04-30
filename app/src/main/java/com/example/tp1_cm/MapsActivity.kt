@@ -214,6 +214,25 @@ class MapsActivity : AppCompatActivity(), OnMapReadyCallback {
 
     }
 
+    //Navegação para a página de adicionar ocorrencia
+    fun adicionarOcorrencia(view: View) {
+
+        //Abrir o shared preferences
+        val sharedPref: SharedPreferences = getSharedPreferences(
+            getString(R.string.preference_login), Context.MODE_PRIVATE
+        )
+        //Utilizador com sessão iniciada
+        var idUtilizadorLogado = sharedPref.all[getString(R.string.Id_LoginUser)]
+
+        val intent = Intent(this, AdicionarOcorrencias::class.java).apply {
+            putExtra("id_user", idUtilizadorLogado.toString())
+            putExtra("localizacao", LatLng(lastLocation.latitude, lastLocation.longitude))
+        }
+        startActivity(intent)
+
+
+    }
+
     //navegação
     override fun onBackPressed() {
         //nothing

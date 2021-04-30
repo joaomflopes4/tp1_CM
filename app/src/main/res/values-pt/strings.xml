@@ -39,4 +39,5 @@
     <string name="DeletePoint">Tem a certeza que deseja eliminar este ponto?</string>
     <string name="deletesucessful">Eliminado com sucesso</string>
     <string name="Errordelete">Erro ao eliminar</string>
+    <string name="save">Guardar</string>
 </resources>
