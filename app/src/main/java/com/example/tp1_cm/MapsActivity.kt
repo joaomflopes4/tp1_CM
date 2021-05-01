@@ -29,6 +29,7 @@ import com.google.android.gms.maps.SupportMapFragment
 import com.google.android.gms.maps.model.BitmapDescriptorFactory
 import com.google.android.gms.maps.model.LatLng
 import com.google.android.gms.maps.model.MarkerOptions
+import com.google.android.material.floatingactionbutton.FloatingActionButton
 
 class MapsActivity : AppCompatActivity(), OnMapReadyCallback {
 
@@ -108,7 +109,7 @@ class MapsActivity : AppCompatActivity(), OnMapReadyCallback {
         })
 
         //Filtrar pro acidentes
-        val acidentes = findViewById<RadioButton>(R.id.Acidente2)
+        val acidentes = findViewById<FloatingActionButton>(R.id.Acidente3)
         acidentes.setOnClickListener {
             mMap.clear()
 
@@ -155,7 +156,7 @@ class MapsActivity : AppCompatActivity(), OnMapReadyCallback {
         }
 
         //Filtrar pro obras
-        val obras = findViewById<RadioButton>(R.id.Obras2)
+        val obras = findViewById<FloatingActionButton>(R.id.Obras3)
         obras.setOnClickListener {
             mMap.clear()
 
@@ -202,7 +203,7 @@ class MapsActivity : AppCompatActivity(), OnMapReadyCallback {
         }
 
         //Filtrar por todos
-        val all = findViewById<RadioButton>(R.id.All)
+        val all = findViewById<FloatingActionButton>(R.id.Todos)
         all.setOnClickListener {
             mMap.clear()
             val request = ServiceBuilder.buildService(EndPoints::class.java)
@@ -244,8 +245,8 @@ class MapsActivity : AppCompatActivity(), OnMapReadyCallback {
             })
         }
 
-        //Filtrar por 500 metros
-        val km5 = findViewById<RadioButton>(R.id.km2)
+        //Filtrar por 5km
+        val km5 = findViewById<FloatingActionButton>(R.id.Distancia5km)
         km5.setOnClickListener {
             mMap.clear()
             val request = ServiceBuilder.buildService(EndPoints::class.java)
@@ -291,8 +292,8 @@ class MapsActivity : AppCompatActivity(), OnMapReadyCallback {
             })
         }
 
-        //Filtrar por 5km
-        val km10 = findViewById<RadioButton>(R.id.km5)
+        //Filtrar por 10km
+        val km10 = findViewById<FloatingActionButton>(R.id.Distancia10km)
         km10.setOnClickListener {
             mMap.clear()
             val request = ServiceBuilder.buildService(EndPoints::class.java)
@@ -337,10 +338,45 @@ class MapsActivity : AppCompatActivity(), OnMapReadyCallback {
                 }
             })
         }
+
+        //chama a função quando clicamos no botão dos filtros
+        val botaosuperior = findViewById<FloatingActionButton>(R.id.fab3)
+        botaosuperior.setOnClickListener {
+            onAddButtonClicked()
+        }
+
         createLocationRequest()
 
 
     }
+
+    //Função de click do botão dos filtros
+    private fun onAddButtonClicked(){
+        setVisibility(clicked)
+        clicked = !clicked
+    }
+
+    private fun setVisibility(clicked: Boolean){
+        val botao2 = findViewById<FloatingActionButton>(R.id.Acidente3)
+        val botao3 = findViewById<FloatingActionButton>(R.id.Obras3)
+        val distancia5 = findViewById<FloatingActionButton>(R.id.Distancia5km)
+        val distancia10 = findViewById<FloatingActionButton>(R.id.Distancia10km)
+        val repor = findViewById<FloatingActionButton>(R.id.Todos)
+        if(!clicked){
+            botao2.visibility=View.VISIBLE
+            botao3.visibility=View.VISIBLE
+            distancia5.visibility=View.VISIBLE
+            distancia10.visibility=View.VISIBLE
+            repor.visibility=View.VISIBLE
+        } else {
+            botao2.visibility=View.INVISIBLE
+            botao3.visibility=View.INVISIBLE
+            distancia5.visibility=View.INVISIBLE
+            distancia10.visibility=View.INVISIBLE
+            repor.visibility=View.INVISIBLE
+        }
+    }
+
 
     //Calcular a distancia entre a localização atual e um ponto
     fun calculateDistance(lat1: Double, lng1: Double, lat2: Double, lng2: Double): Float {
