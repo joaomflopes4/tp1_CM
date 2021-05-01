@@ -16,66 +16,97 @@
         android:layout_width="match_parent"
         android:layout_height="match_parent"
         tools:context=".MapsActivity">
-        <RadioGroup
-            android:id="@+id/radioGroup"
-            android:layout_width="150dp"
-            android:layout_height="240dp"
-            android:background="#FFF"
-            android:layout_alignTop="@+id/bottomBar"
-            android:layout_alignParentStart="true"
-            android:layout_alignParentLeft="true"
-            android:layout_alignParentEnd="true"
-            android:layout_alignParentRight="true"
-            android:layout_marginStart="5dp"
-            android:layout_marginLeft="5dp"
-            android:layout_marginTop="-564dp"
-            android:layout_marginEnd="13dp"
-            android:layout_marginRight="13dp">
-
-            <RadioButton
-                android:id="@+id/Acidente2"
-                android:layout_width="143dp"
-                android:layout_height="wrap_content"
-                android:text="@string/accidents"
-                android:textStyle="bold"
-                android:textSize="16sp"
-                ></RadioButton>
-
-            <RadioButton
-                android:id="@+id/Obras2"
-                android:layout_width="145dp"
-                android:layout_height="wrap_content"
-                android:text="@string/construction"
-                android:textStyle="bold"
-                android:textSize="16sp"></RadioButton>
+        <com.google.android.material.floatingactionbutton.FloatingActionButton
+            android:id="@+id/fab3"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginBottom="24dp"
+            android:layout_marginTop="5dp"
+            android:layout_marginLeft="10dp"
+            android:contentDescription="@string/addNote"
+            android:src="@drawable/ic_baseline_dehaze_24"
+            app:backgroundTint="#fb8c00"
+            app:tint="@android:color/white"
+            app:layout_constraintTop_toTopOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:fabSize="mini"
+            />
 
 
+        <com.google.android.material.floatingactionbutton.FloatingActionButton
+            android:id="@+id/Acidente3"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginBottom="24dp"
+            android:layout_marginTop="50dp"
+            android:layout_marginLeft="10dp"
+            android:src="@drawable/ic_baseline_directions_car_24"
+            app:backgroundTint="#fb8c00"
+            app:tint="@android:color/white"
+            app:layout_constraintTop_toTopOf="@+id/fab3"
+            app:layout_constraintStart_toStartOf="parent"
+            app:fabSize="mini"
+            android:visibility="invisible"/>
 
-            <RadioButton
-                android:id="@+id/km2"
-                android:layout_width="143dp"
-                android:layout_height="wrap_content"
-                android:text="@string/Distancia2km"
-                android:textStyle="bold"
-                android:textSize="16sp"
-                ></RadioButton>
+        <com.google.android.material.floatingactionbutton.FloatingActionButton
+            android:id="@+id/Obras3"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginBottom="24dp"
+            android:layout_marginTop="50dp"
+            android:layout_marginLeft="10dp"
+            android:src="@drawable/ic_baseline_warning_24"
+            app:backgroundTint="#fb8c00"
+            app:tint="@android:color/white"
+            app:layout_constraintTop_toTopOf="@+id/Acidente3"
+            app:layout_constraintStart_toStartOf="parent"
+            app:fabSize="mini"
+            android:visibility="invisible"/>
 
-            <RadioButton
-                android:id="@+id/km5"
-                android:layout_width="145dp"
-                android:layout_height="wrap_content"
-                android:text="@string/Distancia5km"
-                android:textStyle="bold"
-                android:textSize="16sp"></RadioButton>
+        <com.google.android.material.floatingactionbutton.FloatingActionButton
+            android:id="@+id/Distancia5km"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginBottom="24dp"
+            android:layout_marginTop="50dp"
+            android:layout_marginLeft="10dp"
+            android:src="@drawable/km5"
+            app:backgroundTint="#fb8c00"
+            app:tint="@android:color/white"
+            app:layout_constraintTop_toTopOf="@+id/Obras3"
+            app:layout_constraintStart_toStartOf="parent"
+            app:fabSize="mini"
+            android:visibility="invisible"/>
 
-            <RadioButton
-                android:id="@+id/All"
-                android:layout_width="145dp"
-                android:layout_height="wrap_content"
-                android:text="@string/all"
-                android:textStyle="bold"
-                android:textSize="16sp"></RadioButton>
-    </RadioGroup>
+        <com.google.android.material.floatingactionbutton.FloatingActionButton
+            android:id="@+id/Distancia10km"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginBottom="24dp"
+            android:layout_marginTop="50dp"
+            android:layout_marginLeft="10dp"
+            android:src="@drawable/km10"
+            app:backgroundTint="#fb8c00"
+            app:tint="@android:color/white"
+            app:layout_constraintTop_toTopOf="@+id/Distancia5km"
+            app:layout_constraintStart_toStartOf="parent"
+            app:fabSize="mini"
+            android:visibility="invisible"/>
+
+        <com.google.android.material.floatingactionbutton.FloatingActionButton
+            android:id="@+id/Todos"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginBottom="24dp"
+            android:layout_marginTop="50dp"
+            android:layout_marginLeft="10dp"
+            android:src="@drawable/ic_baseline_refresh_24"
+            app:backgroundTint="#fb8c00"
+            app:tint="@android:color/white"
+            app:layout_constraintTop_toTopOf="@+id/Distancia10km"
+            app:layout_constraintStart_toStartOf="parent"
+            app:fabSize="mini"
+            android:visibility="invisible"/>
 
         <com.google.android.material.floatingactionbutton.FloatingActionButton
             android:id="@+id/fab1"

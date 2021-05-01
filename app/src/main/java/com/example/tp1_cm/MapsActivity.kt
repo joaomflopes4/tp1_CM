@@ -41,6 +41,8 @@ class MapsActivity : AppCompatActivity(), OnMapReadyCallback {
     private lateinit var  locationCallback: LocationCallback
     private lateinit var locationRequest: LocationRequest
 
+    private var clicked = false
+
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_maps)
@@ -105,6 +107,7 @@ class MapsActivity : AppCompatActivity(), OnMapReadyCallback {
             }
         })
 
+        //Filtrar pro acidentes
         val acidentes = findViewById<RadioButton>(R.id.Acidente2)
         acidentes.setOnClickListener {
             mMap.clear()
@@ -150,6 +153,8 @@ class MapsActivity : AppCompatActivity(), OnMapReadyCallback {
                 }
             })
         }
+
+        //Filtrar pro obras
         val obras = findViewById<RadioButton>(R.id.Obras2)
         obras.setOnClickListener {
             mMap.clear()
@@ -195,6 +200,8 @@ class MapsActivity : AppCompatActivity(), OnMapReadyCallback {
                 }
             })
         }
+
+        //Filtrar por todos
         val all = findViewById<RadioButton>(R.id.All)
         all.setOnClickListener {
             mMap.clear()
@@ -237,6 +244,7 @@ class MapsActivity : AppCompatActivity(), OnMapReadyCallback {
             })
         }
 
+        //Filtrar por 500 metros
         val km5 = findViewById<RadioButton>(R.id.km2)
         km5.setOnClickListener {
             mMap.clear()
@@ -283,6 +291,7 @@ class MapsActivity : AppCompatActivity(), OnMapReadyCallback {
             })
         }
 
+        //Filtrar por 5km
         val km10 = findViewById<RadioButton>(R.id.km5)
         km10.setOnClickListener {
             mMap.clear()
@@ -333,6 +342,7 @@ class MapsActivity : AppCompatActivity(), OnMapReadyCallback {
 
     }
 
+    //Calcular a distancia entre a localização atual e um ponto
     fun calculateDistance(lat1: Double, lng1: Double, lat2: Double, lng2: Double): Float {
         val results = FloatArray(1)
         Location.distanceBetween(lat1, lng1, lat2, lng2, results)
