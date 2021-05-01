@@ -42,4 +42,7 @@
     <string name="save">Guardar</string>
     <string name="accidents">Acidente</string>
     <string name="construction">Obras</string>
+    <string name="points">Pontos</string>
+    <string name="all">Todos</string>
+    <string name="distance">Distância</string>
 </resources>
