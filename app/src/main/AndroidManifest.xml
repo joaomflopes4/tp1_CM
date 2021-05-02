@@ -17,10 +17,12 @@
         android:supportsRtl="true"
         android:theme="@style/Theme.Tp1_CM">
         <activity android:name=".AdicionarOcorrencias"
-            android:parentActivityName=".MapsActivity"></activity>
+            android:parentActivityName=".MapsActivity"
+            android:label="@string/InsertPoint"></activity>
         <activity
             android:name=".Editar_eliminarPontos"
-            android:parentActivityName=".MapsActivity" />
+            android:parentActivityName=".MapsActivity"
+            android:label="@string/EditDeletePoint"/>
         <activity android:name=".Markerwindow" />
         <!--
              The API key for Google Maps-based APIs is defined as a string resource.
