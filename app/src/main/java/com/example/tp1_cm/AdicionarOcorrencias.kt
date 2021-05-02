@@ -52,120 +52,114 @@ class AdicionarOcorrencias : AppCompatActivity() {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_adicionar_ocorrencias)
 
+        //Dados vindos da MapsActivity
         var intent = intent
-        //Latitude
-        val latitude = intent.getParcelableExtra<LatLng>("localizacao")!!.latitude
-        //Longitude
-        val longitude = intent.getParcelableExtra<LatLng>("localizacao")!!.longitude
-
         val id_user = intent.getStringExtra("id_user")
 
+        //Imagem
         image = findViewById(R.id.imagemRecebida)
 
+        //Spinner Ocorrencias
         val spinner = findViewById<Spinner>(R.id.ocorrenciaRecebida)
         val adapter = ArrayAdapter.createFromResource(this, R.array.tipos, android.R.layout.simple_spinner_item)
         adapter.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item)
         spinner.adapter = adapter
         val button = findViewById<Button>(R.id.addOcorrencia)
 
+        //Quando o botão editar é carregado
         button.setOnClickListener {
-            //imagem
-            val nomeImagem = findViewById<EditText>(R.id.nomeImagem).text.toString()
 
-            val imgBitmap: Bitmap = findViewById<ImageView>(R.id.imagemRecebida).drawable.toBitmap()
-            val imageFile: File = convertBitmapToFile("file", imgBitmap)
-            var imageUrl = "https://22362tpcm.000webhostapp.com/myslim/api/imagens/" + nomeImagem + ".JPG"
-
-            val bos = ByteArrayOutputStream()
-            val imagem: Bitmap = (image.drawable as BitmapDrawable).bitmap
-            imagem.compress(Bitmap.CompressFormat.JPEG, 100, bos)
-            val encodedImage: String = Base64.getEncoder().encodeToString(bos.toByteArray())
-
-
-
-            val titulo = findViewById<EditText>(R.id.tituloRecebido).text.toString()
-
-            val descricao = findViewById<EditText>(R.id.descricaoRecebida).text.toString()
-
+            //Localização - as últimas coordenas recebidas no MapsActivity são enviadas para esta atividade assim q a atividade é aberta
+            //Latitude
             val lat = intent.getParcelableExtra<LatLng>("localizacao")!!.latitude
 
+            //Longitude
             val long = intent.getParcelableExtra<LatLng>("localizacao")!!.longitude
 
+            //Título inserido
+            val titulo = findViewById<EditText>(R.id.tituloRecebido)
 
+            //Descrição inserida
+            val descricao = findViewById<EditText>(R.id.descricaoRecebida)
 
+            //Tipo de ocorrência selecionado
             val tipo = spinner.selectedItemId
 
+            //Nome da imagem inserido
+            val nomeImagem = findViewById<EditText>(R.id.nomeImagem)
 
 
-            /*Log.d("***AQUI",titulo )
-            Log.d("***AQUI",descricao )
-            Log.d("***AQUI",lat.toString() )
-            Log.d("***AQUI",long.toString() )
-            Log.d("***AQUI",id_user.toString() )
-            Log.d("***AQUI",tipo.toString() )*/
+            //Validações
+            if(titulo.text.isNullOrEmpty() || descricao.text.isNullOrEmpty() ||tipo.toString().equals("0") || nomeImagem.text.isNullOrEmpty()){
+                if(titulo.text.isNullOrEmpty()){
+                    titulo.error = getString(R.string.tit)
+                }
+                if(descricao.text.isNullOrEmpty()){
+                    descricao.error = getString(R.string.description)
+                    Log.d("***AQUI", tipo.toString())
 
-            val request = ServiceBuilder.buildService(EndPoints::class.java)
-            val call = request.adicionarOcorrencia(lat.toString(), long.toString(), titulo, descricao, imageUrl.toString(),id_user!!.toInt(),tipo.toInt(),encodedImage,nomeImagem)
-            var intent = Intent(this, MapsActivity::class.java)
+                }
+                if (tipo.toString().equals("0")){
+                    Toast.makeText(this@AdicionarOcorrencias, R.string.selectType, Toast.LENGTH_SHORT).show()
+                }
+                if (nomeImagem.text.isNullOrEmpty()){
+                    nomeImagem.error = getString(R.string.Insertimagename)
+                }
 
-            Log.d("***AQUI",imgBitmap.toString() )
-            Log.d("***AQUI",encodedImage )
+            } else {
+
+                //URL da imagem (webhost)
+                var imageUrl = "https://22362tpcm.000webhostapp.com/myslim/api/imagens/" + nomeImagem.text.toString() + ".JPG"
+
+                //Codificar imagem em base 64
+                val bos = ByteArrayOutputStream()
+                val imagem: Bitmap = (image.drawable as BitmapDrawable).bitmap
+                imagem.compress(Bitmap.CompressFormat.JPEG, 100, bos)
+                val encodedImage: String = Base64.getEncoder().encodeToString(bos.toByteArray())
 
 
-            call.enqueue(object : Callback<Pontos_adicionar> {
-                override fun onResponse(call: Call<Pontos_adicionar>, response: Response<Pontos_adicionar>) {
-                    if (response.isSuccessful){
-
-                        Toast.makeText(this@AdicionarOcorrencias, R.string.updatesuccessful, Toast.LENGTH_SHORT).show()
-                        startActivity(intent)
+                val request = ServiceBuilder.buildService(EndPoints::class.java)
+                val call = request.adicionarOcorrencia(lat.toString(), long.toString(), titulo.text.toString(), descricao.text.toString(), imageUrl.toString(),id_user!!.toInt(),tipo.toInt(),encodedImage,nomeImagem.text.toString())
+                var intent = Intent(this, MapsActivity::class.java)
 
 
+                Log.d("***AQUI",encodedImage )
 
-                    } else {
-                        Toast.makeText(this@AdicionarOcorrencias, R.string.ErrorupdatePoint, Toast.LENGTH_SHORT).show()
+
+                call.enqueue(object : Callback<Pontos_adicionar> {
+                    override fun onResponse(call: Call<Pontos_adicionar>, response: Response<Pontos_adicionar>) {
+                        if (response.isSuccessful){
+
+                            Toast.makeText(this@AdicionarOcorrencias, R.string.updatesuccessful, Toast.LENGTH_SHORT).show()
+                            startActivity(intent)
+
+
+                        } else {
+                            Toast.makeText(this@AdicionarOcorrencias, R.string.ErrorupdatePoint, Toast.LENGTH_SHORT).show()
+                        }
                     }
-                }
 
-                override fun onFailure(call: Call<Pontos_adicionar>, t: Throwable) {
-                    //Toast.makeText(this@Editar_eliminarPontos, "${t.message}", Toast.LENGTH_SHORT).show()
-                }
-            })
+                    override fun onFailure(call: Call<Pontos_adicionar>, t: Throwable) {
+                        //Toast.makeText(this@Editar_eliminarPontos, "${t.message}", Toast.LENGTH_SHORT).show()
+                    }
+                })
+
+            }
+
+
 
         }
 
 
     }
-    private fun convertBitmapToFile(fileName: String, bitmap: Bitmap): File {
-        //create a file to write bitmap data
-        val file = File(this@AdicionarOcorrencias.cacheDir, fileName)
-        file.createNewFile()
-
-        //Convert bitmap to byte array
-        val bos = ByteArrayOutputStream()
-        bitmap.compress(Bitmap.CompressFormat.JPEG, 0, bos)
-        val bitMapData = bos.toByteArray()
-
-        //write the bytes in file
-        var fos: FileOutputStream? = null
-        try {
-            fos = FileOutputStream(file)
-        } catch (e: FileNotFoundException) {
-            e.printStackTrace()
-        }
-        try {
-            fos?.write(bitMapData)
-            fos?.flush()
-            fos?.close()
-        } catch (e: IOException) {
-            e.printStackTrace()
-        }
-        return file
-    }
+    //Escolher a imagem
     fun chooseImage(view: View) {
         val intent = Intent(Intent.ACTION_PICK)
         intent.type = "image/*"
         startActivityForResult(intent, REQUEST_CODE)
     }
+
+    //Atribuir a imagem selecionada à Image View
     override fun onActivityResult(requestCode: Int, resultCode: Int, data: Intent?) {
         super.onActivityResult(requestCode, resultCode, data)
         if (resultCode == RESULT_OK && requestCode == REQUEST_CODE) {

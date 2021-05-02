@@ -67,4 +67,8 @@
     <string name="distance">Distance</string>
     <string name="Distancia5km" translatable="false">5 km</string>
     <string name="Distancia2km" translatable="false">500 m</string>
+    <string name="selectType">Select type occurrence</string>
+    <string name="Insertimagename">Insert image name</string>
+    <string name="selectImage">Select an image</string>
+    <string name="errorInsert">Error to insert</string>
 </resources>
