@@ -103,19 +103,10 @@ class Editar_eliminarPontos : AppCompatActivity() {
             call.enqueue(object : Callback<EditarOcorrencias> {
                 override fun onResponse(call: Call<EditarOcorrencias>, response: Response<EditarOcorrencias>) {
                     if (response.isSuccessful){
-                        val e: EditarOcorrencias = response.body()!!
-
-                        if(tituloEditado.text.toString().equals(e.nome) && (descricaoEditada.text.toString().equals(e.descricao))){
-
                             Toast.makeText(this@Editar_eliminarPontos, R.string.updatesuccessful, Toast.LENGTH_SHORT).show()
                             startActivity(intent2)
-
-
-                        }else if (!(tituloEditado.text.toString().equals(e.nome) && (descricaoEditada.text.toString().equals(e.descricao)))){
-
-                            Toast.makeText(this@Editar_eliminarPontos, R.string.ErrorupdatePoint, Toast.LENGTH_SHORT).show()
-                        }
-
+                    } else {
+                        Toast.makeText(this@Editar_eliminarPontos, R.string.ErrorupdatePoint, Toast.LENGTH_SHORT).show()
                     }
                 }
 

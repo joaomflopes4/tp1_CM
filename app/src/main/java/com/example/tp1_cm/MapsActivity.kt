@@ -73,7 +73,7 @@ class MapsActivity : AppCompatActivity(), OnMapReadyCallback {
                 getString(R.string.preference_login), Context.MODE_PRIVATE
         )
 
-        //Obter resposta do ws
+        //Obter resposta do ws em relação aos pontos
         call.enqueue(object : Callback<List<Pontos>>{
             override fun onResponse(call: Call<List<Pontos>>, response: Response<List<Pontos>>) {
                 if (response.isSuccessful){
@@ -107,6 +107,8 @@ class MapsActivity : AppCompatActivity(), OnMapReadyCallback {
                 Toast.makeText(this@MapsActivity, "${t.message}", Toast.LENGTH_SHORT).show()
             }
         })
+
+        //FILTROS
 
         //Filtrar pro acidentes
         val acidentes = findViewById<FloatingActionButton>(R.id.Acidente3)
@@ -405,8 +407,8 @@ class MapsActivity : AppCompatActivity(), OnMapReadyCallback {
 
         /* mMap.moveCamera(CameraUpdateFactory.newLatLng(zone))*/
         mMap.moveCamera(CameraUpdateFactory.newLatLngZoom(zone, zoomLevel))
-        mMap.setInfoWindowAdapter(Markerwindow(this))
-        //Passar a informação quando a InfoWindow é clicada
+        mMap.setInfoWindowAdapter(Markerwindow(this)) //Envia os dados do ponto clicado para o marker window
+        //Passar a informação quando a MarkerWindow é clicada para editar ou eliminar
                 mMap.setOnInfoWindowClickListener { marker ->
                     val intent = Intent(this, Editar_eliminarPontos::class.java).apply{
                         putExtra("Título", marker.title)
@@ -417,6 +419,7 @@ class MapsActivity : AppCompatActivity(), OnMapReadyCallback {
     }
 
 
+    //Pede as premissões para aceder à localização
     private fun setUpMap() {
         if(ActivityCompat.checkSelfPermission(this,
                 android.Manifest.permission.ACCESS_FINE_LOCATION) != PackageManager.PERMISSION_GRANTED){
@@ -437,6 +440,7 @@ class MapsActivity : AppCompatActivity(), OnMapReadyCallback {
         }
     }
 
+    //Verifica se a premissão foi concedida
     private fun startLocationUpdates() {
         if(ActivityCompat.checkSelfPermission(this,
                 android.Manifest.permission.ACCESS_FINE_LOCATION) != PackageManager.PERMISSION_GRANTED){
@@ -447,6 +451,7 @@ class MapsActivity : AppCompatActivity(), OnMapReadyCallback {
         fusedLocationClient.requestLocationUpdates(locationRequest, locationCallback, null )
     }
 
+    //FAz o pedido de localização num determinado espaço de tempo
     private fun createLocationRequest(){
         locationRequest = LocationRequest()
         locationRequest.interval = 10000
@@ -503,6 +508,7 @@ class MapsActivity : AppCompatActivity(), OnMapReadyCallback {
         //Utilizador com sessão iniciada
         var idUtilizadorLogado = sharedPref.all[getString(R.string.Id_LoginUser)]
 
+        //Enviar dados para a página de adicionar (id do utilizador e a ultima localização obtida)
         val intent = Intent(this, AdicionarOcorrencias::class.java).apply {
             putExtra("id_user", idUtilizadorLogado.toString())
             putExtra("localizacao", LatLng(lastLocation.latitude, lastLocation.longitude))

@@ -66,7 +66,7 @@ class AdicionarOcorrencias : AppCompatActivity() {
         spinner.adapter = adapter
         val button = findViewById<Button>(R.id.addOcorrencia)
 
-        //Quando o botão editar é carregado
+        //Quando o botão é carregado
         button.setOnClickListener {
 
             //Localização - as últimas coordenas recebidas no MapsActivity são enviadas para esta atividade assim q a atividade é aberta
@@ -130,12 +130,12 @@ class AdicionarOcorrencias : AppCompatActivity() {
                     override fun onResponse(call: Call<Pontos_adicionar>, response: Response<Pontos_adicionar>) {
                         if (response.isSuccessful){
 
-                            Toast.makeText(this@AdicionarOcorrencias, R.string.updatesuccessful, Toast.LENGTH_SHORT).show()
+                            Toast.makeText(this@AdicionarOcorrencias, R.string.saved, Toast.LENGTH_SHORT).show()
                             startActivity(intent)
 
 
                         } else {
-                            Toast.makeText(this@AdicionarOcorrencias, R.string.ErrorupdatePoint, Toast.LENGTH_SHORT).show()
+                            Toast.makeText(this@AdicionarOcorrencias, R.string.errorTosaved, Toast.LENGTH_SHORT).show()
                         }
                     }
 

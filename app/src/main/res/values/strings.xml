@@ -48,11 +48,11 @@
     <string name="tit">Title</string>
     <string name="occurrence">Occurrence Type</string>
     <string name="image">Image</string>
-    <string name="updatesuccessful">Update Successful</string>
+    <string name="updatesuccessful">Update Successfully</string>
     <string name="ErrorupdatePoint">Error to Update</string>
     <string name="deletepointtitle">Delete Point</string>
     <string name="DeletePoint">Are you sure you want to delete this point?</string>
-    <string name="deletesucessful">Delete Sucessful</string>
+    <string name="deletesucessful">Delete Successfully!</string>
     <string name="Errordelete">Error to delete</string>
     <string name="save">Save</string>
     <string-array name="tipos">
@@ -73,4 +73,6 @@
     <string name="errorInsert">Error to insert</string>
     <string name="InsertPoint">Insert Point</string>
     <string name="EditDeletePoint">Edit/Delete Point</string>
+    <string name="saved">Saved Successfully!</string>
+    <string name="errorTosaved">Error to Save</string>
 </resources>

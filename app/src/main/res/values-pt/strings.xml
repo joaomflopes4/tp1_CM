@@ -51,4 +51,6 @@
     <string name="errorInsert">Erro ao inserir</string>
     <string name="InsertPoint">Inserir ponto</string>
     <string name="EditDeletePoint">Editar/Apagar um ponto</string>
+    <string name="saved">Guardado com Sucesso</string>
+    <string name="errorTosaved">Erro ao Guardar</string>
 </resources>
